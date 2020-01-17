@@ -30,7 +30,14 @@ namespace TokenAuthenticationWebAPI.Models
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Role, user.UserRoles));
+            
+            string[] Roles = user.UserRoles.Split(',');
+            
+            foreach(string item in Roles)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, item));
+            }
+
             identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
             identity.AddClaim(new Claim("Email", user.UserEmailID));
 
